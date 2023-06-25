@@ -9,12 +9,14 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:intl/intl.dart';
 
+import 'app_route.dart';
 import 'controllers/database_controller.dart';
 
 part 'controllers/contacts_contrller.dart';
 
 
 class ContactsScreen extends GetView<ContactsController>{
+
 
 
 
@@ -29,6 +31,13 @@ class ContactsScreen extends GetView<ContactsController>{
         title: const Text(
           'Contact'
         ),
+        actions: [
+          MaterialButton(onPressed: () {
+            Navigator.pushNamed(context, Routes.HotelScreen);
+          },
+            child: Text('Hotel'),
+          )
+        ],
       ),
 
       body: Form(
@@ -55,12 +64,14 @@ class ContactsScreen extends GetView<ContactsController>{
 
                     subtitle: Text(controller.listRx[index].description) ,
                     leading: Container(
-                      child:  CircleAvatar(
+
+                      child:   CircleAvatar(
                         radius: 35,
 
-                        child: Text(controller.formattedDate,
-                        style: TextStyle(
-                          fontSize: 10
+                        child: Text(controller.listRx[index].date!,
+                        style: const TextStyle(
+                          fontSize: 10,
+
                         ),),
 
                       ),
@@ -91,7 +102,7 @@ class ContactsScreen extends GetView<ContactsController>{
                                 children:
                                 [
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 30,
                                   ),
                                   Padding(
@@ -118,9 +129,10 @@ class ContactsScreen extends GetView<ContactsController>{
                                       controller: controller.phoneControllerUpdate,
                                       keyboardType: TextInputType.number,
                                       validator: (value) {
-                                        if(controller.nameController.text.isEmpty){
-                                          return ' enter naem';
+                                        if(value!.isEmpty){
+                                          return ' Enter Name';
                                         }
+                                        return null;
                                       },
 
 
@@ -140,7 +152,7 @@ class ContactsScreen extends GetView<ContactsController>{
                                       width: double.infinity,
                                       height: 55,
                                       decoration: BoxDecoration(
-                                          color: Colors.red,
+                                          color: Colors.green,
                                           borderRadius: BorderRadius.circular(200)
 
                                       ),
@@ -151,7 +163,9 @@ class ContactsScreen extends GetView<ContactsController>{
 
                                         String name = controller.nameControllerUpdate.text;
                                         String phone = controller.phoneControllerUpdate.text;
-                                        controller.updateUser(i!,name,phone);
+                                        String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+                                        controller.updateUser(i!,name,phone,date);
                                         Navigator.pop(context);
 
 
@@ -193,7 +207,7 @@ class ContactsScreen extends GetView<ContactsController>{
                                 },
                                 child: const Text('Delete',
                                 style: TextStyle(
-                                  color: Colors.red
+                                    color: Colors.green
                                 ),
                                 ),
                               ),
@@ -226,6 +240,7 @@ class ContactsScreen extends GetView<ContactsController>{
 
         },
         child: const Icon(Icons.edit),
+        backgroundColor:   Colors.green,
 
       ),
 
@@ -240,7 +255,7 @@ class ContactsScreen extends GetView<ContactsController>{
 
       Get.bottomSheet(
           isScrollControlled: true,
-          enterBottomSheetDuration: Duration(milliseconds: 500),
+          enterBottomSheetDuration: const Duration(milliseconds: 500),
 
           SingleChildScrollView(
             child: Container(
@@ -297,7 +312,7 @@ class ContactsScreen extends GetView<ContactsController>{
                       width: double.infinity,
                       height: 55,
                       decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: Colors.green,
                           borderRadius: BorderRadius.circular(200)
 
                       ),
@@ -320,7 +335,9 @@ class ContactsScreen extends GetView<ContactsController>{
 
                          String name = controller.nameController.text;
                          String phone = controller.phoneController.text;
-                         controller.inserNewUser(name,phone);
+                         String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
+                         print(date);
+                         controller.inserNewUser(name,phone,date);
                          Navigator.pop(context);
 
                        }

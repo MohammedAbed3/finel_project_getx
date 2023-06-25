@@ -1,5 +1,7 @@
 
+import 'package:finel_project_getx/database/Entitys/hotel.dart';
 import 'package:finel_project_getx/database/Entitys/user.dart';
+import 'package:finel_project_getx/database/daos/hotel_dao.dart';
 import 'package:finel_project_getx/database/daos/user_dao.dart';
 import 'package:finel_project_getx/database/database.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,7 @@ import 'package:get/get.dart';
 class DataBaseController extends GetxController{
 
   late UserDao userDao;
+  late HotelDeo hotelDao;
 
   @override
   void onInit() {
@@ -20,6 +23,7 @@ class DataBaseController extends GetxController{
     final database = await $FloorAppDatabase.databaseBuilder('user_database.db').build();
 
     userDao = database.userDao;
+    hotelDao = database.hotelDao;
   }
   @override
   void onReady() {
@@ -46,6 +50,16 @@ class DataBaseController extends GetxController{
   Future<User?> getUserById(int id)async{
     return await userDao.getUserById(id);
 
+  }
+
+  void insertHotel(Hotel hotel) {
+    hotelDao.insertHotel(hotel);
+  }
+  void updateHotel(Hotel hotel) {
+    hotelDao.updateHotel(hotel);
+  }
+  void deleteHotel(Hotel hotel) {
+    hotelDao.deleteHotel(hotel);
   }
 
 }

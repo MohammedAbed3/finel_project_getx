@@ -16,9 +16,6 @@ class ContactsController extends GetxController{
   var phoneController  = TextEditingController();
   var phoneControllerUpdate  = TextEditingController();
 
-  DateTime now = DateTime.now();
-  String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
-  RxBool isLoading = false.obs;
 
   var name  ='';
   var phone  ='';
@@ -59,11 +56,12 @@ class ContactsController extends GetxController{
     phoneController.dispose();
   }
 
-  void inserNewUser(String name ,String phone) {
+  void inserNewUser(String name ,String phone,String date) {
 
     User user = User(
         title:name ,
-        description:phone
+        description:phone,
+      date: date
     );
 
     dataBaseController.insertUserData(user);
@@ -76,11 +74,14 @@ class ContactsController extends GetxController{
 
   }
 
-  void updateUser(int id,String name ,String phone){
+  void updateUser(int id,String name ,String phone,String date){
       User user = User(
         id: id,
           title: name,
-          description:phone );
+          description:phone,
+          date: date
+
+      );
 
       dataBaseController.updateUserData(user);
   }
